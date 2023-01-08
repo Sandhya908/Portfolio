@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+        <style>
+            table {
+                border:2px solid white;
+                border-collapse:collapse;
+                width: 100%;
+                height: 100%;
+                padding-left: 25%;
+                padding-top: 25%;
+            } th, td {
+                text-align: centre;
+                padding: 6px;
+                border: 2px solid black;
+            }
+            tr:nth-child(even) {
+                background-color: #7ce2af;
+                height: 50px;
+                width: 50px;
+                font-size:xx-large;
+            }
+            tr:nth-child(odd) {
+                background-color: #ffffff;
+                height: 50px;
+                width: 50px;
+                font-size:xx-large;
+            } th {
+                background-color: #7c0f65;
+                color: white;
+                border: 2px;
+            }
+        </style>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function loadXMLdoc(){
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                innerhtml=" ";
+                if(this.readyState== 4 && this.status == 200){
+                    edudetails(this);
+                } 
+            };
+            xhttp.open("POST", "education.xml", true);
+            xhttp.send();
+        }
+        function edudetails(xml){
+            var i;
+            var xmlDoc = xml.responseXML;
+            var table = `<tr><th>Year</th><th>Board</th><th>Name</th></tr>`;
+            var x = xmlDoc.getElementsByTagName("place");
+            for(i=0;i<x.length;i++){
+                table += "<tr><td>" +
+                    x[i].getElementsByTagName("year")[0]
+                    .childNodes[0].nodeValue + "</td><td>" +
+                    x[i].getElementsByTagName("board")[0]
+                    .childNodes[0].nodeValue + "</td><td>" +
+                    x[i].getElementsByTagName("name")[0]
+                    .childNodes[0].nodeValue;
+            }
+            document.getElementById("id").innerHTML = table;
+        }
+    </script>
+</head>
+<body>
+<header>
+    <div class="user">
+        <img src="Photo.jpeg" alt="">
+        <h3 class="name">Kummaragunta Sandhya</h3>
+        <p class="post"></p>
+    </div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#education" onClick="loadXMLdoc()">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+</ul> </nav>
+</header>
+<div class="container">
+    <section class="home" id="home">
+        <h3>Hello everyone!!</h3>
+        <h3 class="name">This is <span>Kummaragunta Sandhya</span></h3>
+        <div class="share">
+            <a href="https://instagram.com/sandysana_rb?igshid=YmMyMTA2M2Y=" class="fab fa-instagram"></a>
+            <a href="https://www.linkedin.com/in/sandhya-kummaragunta-27546b219" class="fab fa-linkedin"></a>
+            <a href="https://github.com/Sandhya908" class="fab fa-github"></a>
+</div>
+    </section>
+    <section class="about" id="about">
+        <h1 class="heading">ABOUT ME</h1>
+        <div class="content">
+
+<h3 class="name">This is <span>Kummaragunta Sandhya</span></h3>
+<p>An engineering student with higher dreams.
+    In a jounery to achieve many things.
+     Work enthusiastic, ready to face any type of challanges.</p> </div>
+    <div class="skills1">
+        <div class="progress">
+            <h3>html <span>85%</span></h3>
+            <div class="bar"><span></span></div>
+        </div>
+        <div class="progress">
+            <h3>css <span>75%</span></h3>
+            <div class="bar"><span></span></div>
+        </div>
+        <div class="progress">
+            <h3>Java<span>80%</span></h3>
+            <div class="bar"><span></span></div>
+        </div>
+    </div>
+</section>
+<section class="skills" id="skills">
+    <h1 class="heading">MY SKILLS</h1>
+    <div class="box-container">
+        <div class="box">
+            <i class="fab fa-html5"></i>
+            <p>HTML</p>
+        </div>
+        <div class="box">
+            <i class="fab fa-css3"></i>
+            <p>CSS</p>
+        </div>
+        <div class="box">
+            <i class="fab fa-js"></i>
+            <p>Java</p>
+        </div>
+    </div>
+</section>
+<section class="education" id="education">
+    <h1 class="heading">MY EDUCATION</h1>
+
+         <div class="box-container" style="padding-left: 21%;padding-top: 12%;">
+            <center><table id="id" class="tables"></table></center>
+        </div>
+    </section>
+    <section class="contact" id="contact">
+        <h1 class="heading">MY CONTACT DETAILS</h1>
+        <div class="row">
+            <form method="post">
+                <input type="text" class="box" placeholder="first name" name="first_name">
+                <input type="text" class="box" placeholder="last name" name="last_name">
+                <input type="email" class="box" placeholder="your email" name="email">
+                <input type="text" class="box" placeholder="your phone number" name="phno">
+                <input type="submit" value="submit" class="btn" onclick="contact.php">
+            </form>
+                <?php
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $database = "contact";
+                            // Create a connection
+                            $conn = mysqli_connect($servername, $username,$password,$database);
+                            // Die if connection was not successful
+                            if (!$conn){
+                                die ("Sorry we failed to connect:".mysqli_connect_error());
+                            }
+                            else{
+                            }
+                            if($_SERVER['REQUEST_METHOD'] == 'POST')
+                            {
+                                $cn = $_POST['first_name'];
+                                $pd = $_POST['last_name'];
+                                $p = $_POST['email'];
+                                $a = $_POST['phno'];
+                                $sql = "INSERT INTO Contactinfo (first_name,last_name, email, phno) VALUES('$cn','$pd','$p','$a')";
+                                $result=mysqli_query($conn,$sql);
+                                if($result){
+                                    echo "Contact Info Submitted";
+                                }
+                            }
+                 ?>
+            <div class="content">
+
+<div class="icons">
+    <h3><i class="fas fa-map-marker-alt">Address </h3></i>
+    <p>10-7-291
+        Prakasam Road,
+        NAGARI, ANDHRA PRADESH 517590
+        India</p>
+</div>
+<div class="icons">
+    <h3><i class="fas fa-envelope"></i> email </h3>
+    <p>sandhya.20bce7185@vitap.ac.in</p>
+</div>
+<div class="icons">
+    <h3><i class="fas fa-phone-alt"></i> Phone </h3>
+    <p>+91 8374413877</p>
+</div>
+    </section>
+</div>
+<div class="theme-toggler">
+    <span style="background:linear-gradient(rgb(111, 207, 245),rgba(255, 1, 128, 0.226))"></span>
+    <span style="background:linear-gradient(rgb(0, 0, 0),#111)"></span>
+</div>
+<footer class="footer"> Developed by <span> Kummaragunta Sandhya</span>
+</body>
+</html>
